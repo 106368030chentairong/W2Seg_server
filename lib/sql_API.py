@@ -6,3 +6,9 @@ conn = psycopg2.connect(database="d4dv34dbvjjebc",
 						host="ec2-54-87-179-4.compute-1.amazonaws.com",
 						port="5432")
 print("Opened database successfully")
+
+cursor = conn.cursor()
+#cursor.execute("CREATE TABLE userdata (id serial PRIMARY KEY, name VARCHAR(50), userid VARCHAR(50));")
+
+print("Create table successfully")
+cursor.close()
