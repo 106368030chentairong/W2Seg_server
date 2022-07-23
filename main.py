@@ -1,4 +1,7 @@
+from ipaddress import ip_address
 import os, sys
+
+from eth_typing import Address
 from lib.CkipWordSegmenter import w2seq
 
 from flask import Flask, abort, request
@@ -18,4 +21,4 @@ if __name__ == '__main__':
     socep = w2seq()
     socep.setup()
     app.debug = True
-    app.run()
+    app.run(host= "0.0.0.0" , port=8090)

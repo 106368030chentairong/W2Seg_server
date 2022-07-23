@@ -8,7 +8,7 @@ class w2seq():
 
     def setup(self):
         # Initialize drivers
-        self.ws_driver  = CkipWordSegmenter(model="bert-base")
+        self.ws_driver  = CkipWordSegmenter(model="albert-base")
         #self.pos_driver = CkipPosTagger(model="bert-base")
         #self.ner_driver = CkipNerChunker(model="bert-base")
         # Use GPU:0
