@@ -22,6 +22,7 @@ def callback():
         json = request.json
         #sentence = drop_punctuation(json["word"])
         sentence = json["word"]
+        sentence = drop_punctuation(sentence)
         sentence = w2seq_mode.run([sentence])
         print(sentence)
         consql().put_word(json["userid"], sentence)
