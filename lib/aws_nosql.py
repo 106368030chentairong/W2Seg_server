@@ -1,30 +1,62 @@
 import boto3
 import time
+import asyncio
 
-# Get the service resource.
-dynamodb = boto3.resource('dynamodb')
+class consql():
+    def __init__(self) -> None:
+        self.dynamodb = None
+        
+    def connect(self):
+        # Get the service resource.
+        self.dynamodb = boto3.resource('dynamodb')
+        self.table = self.dynamodb.Table('word_table')
 
-table = dynamodb.Table('users')
+    def put_word(self, userid, sentence):
+        for word in sentence:
+            self.check_put(userid, word)
 
+    def check_put(self, userid, word):
+        self.connect()
+        num = self.check_num(userid, word)
+        if num != None:
+            num += 1
+        else:
+            num = 1
+
+        self.table.put_item(
+            Item={
+                'userid': userid,
+                'word': word,
+                'num': num
+            }
+        )
+    def check_num(self, userid, word):
+        response = self.table.get_item(
+            Key={
+                'userid': userid,
+                'word': word,
+            }
+        )
+        if "Item" in response:
+            return response['Item']['num']
+        else:
+            return None
+
+    def get_word(self, userid, word):
+        response = self.table.get_item(
+            Key={
+                'userid': userid,
+                'word': word,
+            }
+        )
+        #print(response)
+        if "Item" in response:
+            return response['Item']
+        else:
+            return None
 '''
-table.put_item(
-   Item={
-        'username': 'janedoe',
-        'first_name': 'Jane',
-        'last_name': 'Doe',
-        'age': 30,
-        'account_type': 'standard_user',
-    }
-)
+socep = consql()
+socep.connect()
+num = socep.put_word("123a", [['我', '要', '買', ' macbook', ' air']])
+print(num)
 '''
-start = time.time()
-response = table.get_item(
-    Key={
-        'username': 'janedoe',
-        'last_name': 'Doe'
-    }
-)
-end = time.time()
-item = response['Item']
-print(item)
-print(format(end-start))
