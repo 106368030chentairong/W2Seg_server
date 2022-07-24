@@ -1,7 +1,6 @@
 from ipaddress import ip_address
 import os, sys
 
-from eth_typing import Address
 from lib.CkipWordSegmenter import w2seq
 from lib.aws_nosql import consql
 
