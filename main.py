@@ -1,4 +1,3 @@
-from ipaddress import ip_address
 import os, sys
 
 from lib.CkipWordSegmenter import w2seq
@@ -15,7 +14,6 @@ def drop_punctuation(text):
     new_text=re.sub(r"[%s]+" %punc, "",text)
     return new_text
 
-
 @app.route("/api/w2seq", methods=["POST"])
 def callback():
     content_type = request.headers.get('Content-Type')
@@ -29,6 +27,15 @@ def callback():
         consql().put_word(json["userid"], sentence)
         #print(str(sentence))
         return str(sentence)
+
+@app.route("/api/getnum", methods=["POST"])
+def gettopnum():
+    content_type = request.headers.get('Content-Type')
+    if (content_type == 'application/json'):
+        json = request.json
+        num = consql().get_word_num(json["userid"],json["word"])
+
+        return str(num)
 
 if __name__ == '__main__':
     w2seq_mode = w2seq()
