@@ -15,7 +15,7 @@ class w2seq():
         #ws_driver = CkipWordSegmenter(device=0)
     def filter_word(self, ws, pos):
         self.tmp = []
-        ner_in = ["COMMACATEGORY" , "Nd","Ng","SHI","VH","DE", "P" ,"PARENTHESISCATEGORY", "PERIODCATEGORY", "Dfa", "D", "WHITESPACE"]
+        ner_in = ["PARENTHESISCATEGORY", "WHITESPACE"]
         for index, pos in enumerate(pos[0]):
             if pos not in ner_in:
                 self.tmp.append(ws[0][index])
